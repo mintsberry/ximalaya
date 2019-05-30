@@ -44,6 +44,7 @@ public class RecommendPresenter implements IRecommendPresenter {
      */
     @Override
     public void getRecommendList() {
+        updataLoading();
         Map<String, String> map = new HashMap<String, String>();
         //表示一页数据返回多少条
         map.put(DTransferConstants.LIKE_COUNT, Constants.RECOMMAND_COUNT + "");
@@ -64,21 +65,39 @@ public class RecommendPresenter implements IRecommendPresenter {
             @Override
             public void onError(int i, String s) {
                 LogUtil.d(TAG, "error->code:" + i + " " + s);
+                handlerError();
             }
         });
     }
 
-
-
-    private void handlerRecommendResult(List<Album> albumList) {
-        //通知UI
+    private void handlerError() {
         if (mCallbacks != null){
             for (IRecommendViewCallback mCallback : mCallbacks) {
-                mCallback.onCommendListLoaded(albumList);
+                mCallback.onNetworkError();
             }
         }
     }
 
+
+    private void handlerRecommendResult(List<Album> albumList) {
+        if (albumList != null){
+            if (albumList.size() == 0){
+                for (IRecommendViewCallback mCallback : mCallbacks) {
+                    mCallback.onEmpty();
+                }
+            } else{
+                for (IRecommendViewCallback mCallback : mCallbacks) {
+                    mCallback.onCommendListLoaded(albumList);
+                }
+            }
+        }
+    }
+
+    private void updataLoading(){
+        for (IRecommendViewCallback mCallback : mCallbacks) {
+            mCallback.onLoading();
+        }
+    }
 
     @Override
     public void pullRefresMore() {
