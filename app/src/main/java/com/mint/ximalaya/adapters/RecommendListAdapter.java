@@ -1,5 +1,6 @@
 package com.mint.ximalaya.adapters;
 
+import android.content.IntentFilter;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
@@ -22,6 +23,8 @@ import java.util.List;
 public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdapter.InnerHolder> {
     private List<Album> mData = new ArrayList<>();
     private static final String TAG = "RecommendListAdapter";
+    private onRecommendItemClickListner itemClickListner;
+
     @NonNull
     @Override
     public InnerHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
@@ -34,6 +37,15 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
     public void onBindViewHolder(@NonNull InnerHolder innerHolder, int i) {
         //设置数据
         innerHolder.itemView.setTag(i);
+        innerHolder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (itemClickListner != null){
+                    int clickPosition = (Integer) v.getTag();
+                    itemClickListner.onItemClick(clickPosition, mData.get(clickPosition));
+                }
+            }
+        });
         innerHolder.setData(mData.get(i));
     }
 
@@ -79,5 +91,12 @@ public class RecommendListAdapter extends RecyclerView.Adapter<RecommendListAdap
             //集数
             albumContenCountTv.setText(album.getIncludeTrackCount()+ "");
         }
+    }
+    public void setOnRecommendItemClickListner(onRecommendItemClickListner listner){
+        this.itemClickListner = listner;
+    }
+
+    public interface  onRecommendItemClickListner{
+        void onItemClick(int postion, Album album);
     }
 }

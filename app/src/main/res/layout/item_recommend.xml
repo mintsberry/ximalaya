@@ -50,7 +50,7 @@
                 <ImageView
                     android:layout_width="7dp"
                     android:layout_height="7dp"
-                    android:src="@drawable/soundloud"
+                    android:src="@drawable/play"
                     android:layout_gravity="center"
                     />
                 <TextView
@@ -70,7 +70,7 @@
                 <ImageView
                     android:layout_width="7dp"
                     android:layout_height="7dp"
-                    android:src="@drawable/sound"
+                    android:src="@drawable/soundloud"
                     android:layout_gravity="center"
 
                     />
