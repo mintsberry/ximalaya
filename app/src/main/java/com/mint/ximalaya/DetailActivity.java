@@ -1,5 +1,6 @@
 package com.mint.ximalaya;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Rect;
@@ -27,6 +28,7 @@ import com.mint.ximalaya.adapters.DetailListAdater;
 import com.mint.ximalaya.base.BaseActivity;
 import com.mint.ximalaya.interfaces.IAlbumDetailVaiewCallback;
 import com.mint.ximalaya.presenters.AlbumDetailPresenterImpl;
+import com.mint.ximalaya.presenters.PlayerPresenterImpl;
 import com.mint.ximalaya.utils.ImageBlur;
 import com.mint.ximalaya.utils.LogUtil;
 import com.mint.ximalaya.views.UILoader;
@@ -106,6 +108,17 @@ public class DetailActivity extends BaseActivity implements IAlbumDetailVaiewCal
                 outRect.bottom = UIUtil.dip2px(view.getContext(), 2);
                 outRect.left = UIUtil.dip2px(view.getContext(), 2);
                 outRect.right = UIUtil.dip2px(view.getContext(), 2);
+            }
+        });
+        mDetailListAdater.setItemCLickListener(new DetailListAdater.ItemClickListener() {
+            @Override
+            public void onItemClick(List<Track> tracks, int position) {
+                //设置播放器数据
+                PlayerPresenterImpl instance = PlayerPresenterImpl.getInstance();
+                instance.setPlayList(tracks, position);
+                //跳转到播放器
+                Intent intent = new Intent(DetailActivity.this, PlayActivity.class);
+                startActivity(intent);
             }
         });
         return detailListView;

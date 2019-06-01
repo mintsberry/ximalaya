@@ -1,6 +1,8 @@
 package com.mint.ximalaya.interfaces;
 
-public interface IAlbumDetailPresenter {
+import com.mint.ximalaya.base.IBasePresenter;
+
+public interface IAlbumDetailPresenter extends IBasePresenter<IAlbumDetailVaiewCallback> {
     /**
      * 下拉刷新
      */
@@ -17,8 +19,4 @@ public interface IAlbumDetailPresenter {
      */
     void getAlbumDetail(int albumId, int page);
 
-
-    void registerViewCallback(IAlbumDetailVaiewCallback detailViewCallback);
-
-    void unRegisterViewCallback(IAlbumDetailVaiewCallback detailViewCallback);
 }

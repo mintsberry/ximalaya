@@ -1,6 +1,8 @@
 package com.mint.ximalaya.interfaces;
 
-public interface IRecommendPresenter {
+import com.mint.ximalaya.base.IBasePresenter;
+
+public interface IRecommendPresenter extends IBasePresenter<IRecommendViewCallback> {
     /**
      * 获取推荐内容
      */
@@ -19,11 +21,5 @@ public interface IRecommendPresenter {
     /**
      * 这个方法用于注册UI的回调
      */
-    void registerViewCallback(IRecommendViewCallback callback);
 
-    /**
-     * 取消回调注册
-     * @param callback
-     */
-    void unRegisterViewCallback(IRecommendViewCallback callback);
 }
